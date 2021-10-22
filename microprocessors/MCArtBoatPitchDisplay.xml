@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Boat Pitch Display" description="Drives a False Horizon display" hide_in_inventory="false" width="2" length="2" id_counter="11" id_counter_node="4" transform_index="0" sym0="65535" sym1="65535" sym2="65535" sym3="65535" sym4="65535" sym5="65535" sym6="65535" sym7="65535" sym8="65535" sym9="0" sym10="0" sym11="0" sym12="0" sym13="0" sym14="0" sym15="0">
+	<nodes>
+		<n id="1" component_id="2" built_slot_index="0">
+			<node orientation="0" label="Roll" mode="1" type="1" description="" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="4" built_slot_index="0">
+			<node orientation="0" label="Pitch" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="3" component_id="7" built_slot_index="0">
+			<node orientation="0" label="Display" mode="1" type="5" description="The input signal to be processed." flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="10" built_slot_index="0">
+			<node orientation="0" label="Display" mode="0" type="6" description="The input signal to be processed." flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="40">
+				<object id="5" count="2" offset="4">
+					<pos x="1.5" y="0.5"/>
+					<inc component_id="7" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="4" node_index="0" v="-0.000547"/>
+					<in2 component_id="2" node_index="0" v="0.001858"/>
+					<out1>
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.000547" 06="0.001858" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="56">
+				<object id="11" script="function onTick()
+	isPressed = input.getBool(1)
+	inputx = input.getNumber(3)
+	inputy = input.getNumber(4)
+	frontTilt = input.getNumber(5) * 4 * 90
+	sideTilt = input.getNumber(6) * 4 * 90
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	rad = w + h
+	cx = w/2
+	cy = h/2
+	pitch = math.acos(frontTilt / 180)
+	roll = math.rad(90 - sideTilt)
+	troll = math.rad(0 - sideTilt)
+	broll = math.rad(180 - sideTilt)
+	x1 = cx + rad * math.cos(roll + pitch)
+	y1 = cy + rad * math.sin(roll + pitch)
+	x2 = cx + rad * math.cos(roll - pitch)
+	y2 = cy + rad * math.sin(roll - pitch)
+	x3 = cx + rad * math.cos(troll - pitch)
+	y3 = cy + rad * math.sin(troll - pitch)
+	x4 = cx + rad * math.cos(broll - pitch)
+	y4 = cy + rad * math.sin(broll - pitch)
+	screen.drawLine(x1, y1, x2, y2)
+	
+	screen.setColor(94, 60, 34) --brown
+	screen.drawTriangleF(x1, y1, x2, y2, x4, y4)
+	screen.setColor(40, 114, 151) --blue
+	screen.drawTriangleF(x1, y1, x2, y2, x3, y3)
+	
+	screen.setColor(200, 200, 200)
+	screen.drawLine(cx, cy + 5, cx - 5, cy)
+	screen.drawLine(cx, cy + 5, cx + 5, cy)
+	screen.drawLine(cx - 24, cy, cx - 5, cy)
+	screen.drawLine(cx + 5, cy, cx + 25, cy)
+end">
+					<pos x="3" y="0.75"/>
+					<in1 component_id="5" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.000519" 06="0.001803" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="2">
+				<object id="2">
+					<pos x="0" y="0"/>
+					<in1 component_id="0" node_index="0" v="0.001858"/>
+					<out1 v="0.001858"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="4">
+					<pos x="0" y="0.5"/>
+					<in1 component_id="0" node_index="0" v="-0.000547"/>
+					<out1 v="-0.000547"/>
+				</object>
+			</c>
+			<c type="4">
+				<object id="7">
+					<pos x="0" y="1"/>
+					<in1 component_id="0" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1>
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="7">
+				<object id="10">
+					<pos x="4.5" y="0.75"/>
+					<in1 component_id="11" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="5" count="2" offset="4">
+				<pos x="1.5" y="0.5"/>
+				<inc component_id="7" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="4" node_index="0" v="-0.000547"/>
+				<in2 component_id="2" node_index="0" v="0.001858"/>
+				<out1>
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.000547" 06="0.001858" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c0>
+			<c1 id="11" script="function onTick()
+	isPressed = input.getBool(1)
+	inputx = input.getNumber(3)
+	inputy = input.getNumber(4)
+	frontTilt = input.getNumber(5) * 4 * 90
+	sideTilt = input.getNumber(6) * 4 * 90
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	rad = w + h
+	cx = w/2
+	cy = h/2
+	pitch = math.acos(frontTilt / 180)
+	roll = math.rad(90 - sideTilt)
+	troll = math.rad(0 - sideTilt)
+	broll = math.rad(180 - sideTilt)
+	x1 = cx + rad * math.cos(roll + pitch)
+	y1 = cy + rad * math.sin(roll + pitch)
+	x2 = cx + rad * math.cos(roll - pitch)
+	y2 = cy + rad * math.sin(roll - pitch)
+	x3 = cx + rad * math.cos(troll - pitch)
+	y3 = cy + rad * math.sin(troll - pitch)
+	x4 = cx + rad * math.cos(broll - pitch)
+	y4 = cy + rad * math.sin(broll - pitch)
+	screen.drawLine(x1, y1, x2, y2)
+	
+	screen.setColor(94, 60, 34) --brown
+	screen.drawTriangleF(x1, y1, x2, y2, x4, y4)
+	screen.setColor(40, 114, 151) --blue
+	screen.drawTriangleF(x1, y1, x2, y2, x3, y3)
+	
+	screen.setColor(200, 200, 200)
+	screen.drawLine(cx, cy + 5, cx - 5, cy)
+	screen.drawLine(cx, cy + 5, cx + 5, cy)
+	screen.drawLine(cx - 24, cy, cx - 5, cy)
+	screen.drawLine(cx + 5, cy, cx + 25, cy)
+end">
+				<pos x="3" y="0.75"/>
+				<in1 component_id="5" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.000519" 06="0.001803" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c1>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="2">
+				<pos x="0" y="0"/>
+				<in1 component_id="0" node_index="0" v="0.001858"/>
+				<out1 v="0.001858"/>
+			</c0>
+			<c1 id="4">
+				<pos x="0" y="0.5"/>
+				<in1 component_id="0" node_index="0" v="-0.000547"/>
+				<out1 v="-0.000547"/>
+			</c1>
+			<c2 id="7">
+				<pos x="0" y="1"/>
+				<in1 component_id="0" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1>
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c2>
+			<c3 id="10">
+				<pos x="4.5" y="0.75"/>
+				<in1 component_id="11" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c3>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

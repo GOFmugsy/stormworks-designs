@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Autopilot Display" description="" hide_in_inventory="false" width="3" length="4" id_counter="37" id_counter_node="12" transform_index="0" sym0="16" sym1="32" sym2="70" sym3="1574" sym4="3602" sym5="3592" sym6="8" sym7="65416" sym8="72" sym9="7728" sym10="16128" sym11="32640" sym12="32655" sym13="16159" sym14="540" sym15="0">
+	<nodes>
+		<n id="1" component_id="5" built_slot_index="0">
+			<node orientation="0" label="Display" mode="0" type="6" description="" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="6" built_slot_index="0">
+			<node orientation="0" label="gpsx" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="8" built_slot_index="0">
+			<node orientation="0" label="gpsy" mode="1" type="1" description="" flags="0">
+				<position x="2" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="10" built_slot_index="0">
+			<node orientation="0" label="Zoom" mode="1" type="1" description="" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="5" component_id="13" built_slot_index="0">
+			<node orientation="0" label="Autopilot Enabled" mode="1" type="0" description="The input signal to be processed." flags="0">
+				<position x="2" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="6" component_id="16" built_slot_index="0">
+			<node orientation="0" label="Waypoint x" mode="1" type="1" description="" flags="0">
+				<position x="0" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="7" component_id="17" built_slot_index="0">
+			<node orientation="0" label="Waypoint y" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="8" component_id="19" built_slot_index="0">
+			<node orientation="0" label="Waypoint Reached" mode="0" type="0" description="" flags="0">
+				<position x="2" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="9" component_id="23" built_slot_index="0">
+			<node orientation="0" label="Compass Sensor" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="10" component_id="27" built_slot_index="0">
+			<node orientation="0" label="Steering Out" mode="0" type="1" description="" flags="0">
+				<position x="0" y="0" z="3"/>
+			</node>
+		</n>
+		<n id="12" component_id="34" built_slot_index="0">
+			<node orientation="0" label="Distance To Waypoint" mode="0" type="1" description="" flags="0">
+				<position x="1" y="0" z="3"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="11" script="function onTick()
+	gpsx = input.getNumber(1)
+	gpsy = input.getNumber(2)
+	zoom = input.getNumber(3)
+	wayx = input.getNumber(4)
+	wayy = input.getNumber(5)
+	compass = input.getNumber(6)
+	heading = compassToHeading(compass)
+	enabled = input.getBool(7)
+	
+	output.setNumber(2, headingToTarget()) -- heading setpoint
+	output.setNumber(3, heading) -- actual heading
+	if enabled then output.setBool(4, true) else output.setBool(4, false) end
+	if distanceToWaypoint() &lt; 30 then output.setBool(1, true) else output.setBool(1, false) end 
+	output.setNumber(5, distanceToWaypoint())
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	screen.drawMap(gpsx, gpsy, zoom)
+	screen.setColor(100, 100, 100)
+	screen.drawLine(w/2 + 1, h/2, w/2 - 2, h/2)
+	screen.drawLine(w/2, h/2 + 1, w/2, h/2 - 2)
+	pixelWayx, pixelWayy = map.mapToScreen(gpsx, gpsy, zoom, w, h, wayx, wayy)
+	screen.drawCircle(pixelWayx, pixelWayy, 5)
+	screen.drawLine(pixelWayx, pixelWayy, w/2, h/2)
+end
+	
+function compassToHeading(comp)
+	return ((1 - comp) % 1) * 360
+end
+function distanceToWaypoint()
+	return math.sqrt((wayx - gpsx)^2 + (wayy - gpsy)^2)
+end
+function headingToTarget()
+	ang = math.deg(math.atan((wayy - gpsy) / (wayx - gpsx)))
+	if wayx - gpsx &gt;= 0 and wayy - gpsy &gt;= 0 then
+		return 90 - ang
+	elseif wayx - gpsx &gt; 0 and wayy - gpsy &lt; 0 then
+		return 90 + ang
+	elseif wayx - gpsx &lt; 0 and wayy - gpsy &lt; 0 then
+		return 270 + ang
+	elseif wayx - gpsx &lt; 0 and wayy - gpsy &gt; 0 then
+		return 270 - ang
+	end
+end">
+					<pos x="-2.5" y="0.25"/>
+					<in1 component_id="21" node_index="0">
+						<v bools="0" 01="389.415283" 02="14815.02832" 03="8" 04="0" 05="0" 06="-0.249705" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="358.494324" 03="89.893806" 04="0" 05="14820.145508" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+			<c type="40">
+				<object id="12" count="6" offset="0">
+					<pos x="-4" y="0"/>
+					<inc component_id="0" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="6" node_index="0" v="389.401276"/>
+					<in2 component_id="8" node_index="0" v="14815.021484"/>
+					<in3 component_id="10" node_index="0" v="8"/>
+					<in4 component_id="16" node_index="0" v="0"/>
+					<in5 component_id="17" node_index="0" v="0"/>
+					<in6 component_id="23" node_index="0" v="-0.249684"/>
+					<out1>
+						<v bools="0" 01="389.401276" 02="14815.021484" 03="8" 04="0" 05="0" 06="-0.249684" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="29">
+				<object id="20" i="0">
+					<pos x="-1" y="1.75"/>
+					<in1 component_id="11" node_index="0">
+						<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="41">
+				<object id="21" count="1" offset="6">
+					<pos x="-4" y="-0.75"/>
+					<inc component_id="12" node_index="0">
+						<v bools="0" 01="389.408203" 02="14815.025391" 03="8" 04="0" 05="0" 06="-0.249694" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="13" node_index="0" v="false"/>
+					<out1>
+						<v bools="0" 01="389.408203" 02="14815.025391" 03="8" 04="0" 05="0" 06="-0.249694" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="24" i="1">
+					<pos x="-1" y="1.25"/>
+					<in1 component_id="11" node_index="0">
+						<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="358.494293"/>
+				</object>
+			</c>
+			<c type="23">
+				<object id="28" te="0" pe="0" pes="false">
+					<pos x="1" y="-0.5"/>
+					<in1 component_id="37" node_index="0" v="0"/>
+					<in2 component_id="36" node_index="0" v="-268.589447"/>
+					<in3 component_id="31" node_index="0" v="false"/>
+					<out1 v="0"/>
+					<kp text="0.1" value="0.1"/>
+					<ki text="0.00001" value="0.00001"/>
+					<kd text="0" value="0"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="30" i="2">
+					<pos x="-1" y="0.75"/>
+					<in1 component_id="11" node_index="0">
+						<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="89.897545"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="31" i="3">
+					<pos x="-1" y="0.25"/>
+					<in1 component_id="11" node_index="0">
+						<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="35" i="4">
+					<pos x="-1" y="-0.75"/>
+					<in1 component_id="11" node_index="0">
+						<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="14820.148438"/>
+				</object>
+			</c>
+			<c type="7">
+				<object id="36">
+					<pos x="1" y="0.5"/>
+					<in1 component_id="30" node_index="0" v="89.901207"/>
+					<in2 component_id="24" node_index="0" v="358.494263"/>
+					<out1 v="-268.593048"/>
+				</object>
+			</c>
+			<c type="15">
+				<object id="37">
+					<pos x="1" y="1.25"/>
+					<out1 v="0"/>
+					<n text="0" value="0"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="7">
+				<object id="5">
+					<pos x="-1" y="-0.25"/>
+					<in1 component_id="11" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="2">
+				<object id="6">
+					<pos x="-5.5" y="2.25"/>
+					<in1 component_id="0" node_index="0" v="389.401276"/>
+					<out1 v="389.401276"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="8">
+					<pos x="-5.5" y="1.75"/>
+					<in1 component_id="0" node_index="0" v="14815.021484"/>
+					<out1 v="14815.021484"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="10">
+					<pos x="-5.5" y="1.25"/>
+					<in1 component_id="0" node_index="0" v="8"/>
+					<out1 v="8"/>
+				</object>
+			</c>
+			<c type="0">
+				<object id="13">
+					<pos x="-5.5" y="-0.75"/>
+					<in1 component_id="0" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="16">
+					<pos x="-5.5" y="0.75"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="17">
+					<pos x="-5.5" y="0.25"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="1">
+				<object id="19">
+					<pos x="2.5" y="1.75"/>
+					<in1 component_id="20" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="23">
+					<pos x="-5.5" y="-0.25"/>
+					<in1 component_id="0" node_index="0" v="-0.249684"/>
+					<out1 v="-0.249684"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="27">
+					<pos x="2.5" y="0"/>
+					<in1 component_id="28" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="34">
+					<pos x="-1" y="-1.25"/>
+					<in1 component_id="35" node_index="0" v="14820.148438"/>
+					<out1 v="14820.148438"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="11" script="function onTick()
+	gpsx = input.getNumber(1)
+	gpsy = input.getNumber(2)
+	zoom = input.getNumber(3)
+	wayx = input.getNumber(4)
+	wayy = input.getNumber(5)
+	compass = input.getNumber(6)
+	heading = compassToHeading(compass)
+	enabled = input.getBool(7)
+	
+	output.setNumber(2, headingToTarget()) -- heading setpoint
+	output.setNumber(3, heading) -- actual heading
+	if enabled then output.setBool(4, true) else output.setBool(4, false) end
+	if distanceToWaypoint() &lt; 30 then output.setBool(1, true) else output.setBool(1, false) end 
+	output.setNumber(5, distanceToWaypoint())
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	screen.drawMap(gpsx, gpsy, zoom)
+	screen.setColor(100, 100, 100)
+	screen.drawLine(w/2 + 1, h/2, w/2 - 2, h/2)
+	screen.drawLine(w/2, h/2 + 1, w/2, h/2 - 2)
+	pixelWayx, pixelWayy = map.mapToScreen(gpsx, gpsy, zoom, w, h, wayx, wayy)
+	screen.drawCircle(pixelWayx, pixelWayy, 5)
+	screen.drawLine(pixelWayx, pixelWayy, w/2, h/2)
+end
+	
+function compassToHeading(comp)
+	return ((1 - comp) % 1) * 360
+end
+function distanceToWaypoint()
+	return math.sqrt((wayx - gpsx)^2 + (wayy - gpsy)^2)
+end
+function headingToTarget()
+	ang = math.deg(math.atan((wayy - gpsy) / (wayx - gpsx)))
+	if wayx - gpsx &gt;= 0 and wayy - gpsy &gt;= 0 then
+		return 90 - ang
+	elseif wayx - gpsx &gt; 0 and wayy - gpsy &lt; 0 then
+		return 90 + ang
+	elseif wayx - gpsx &lt; 0 and wayy - gpsy &lt; 0 then
+		return 270 + ang
+	elseif wayx - gpsx &lt; 0 and wayy - gpsy &gt; 0 then
+		return 270 - ang
+	end
+end">
+				<pos x="-2.5" y="0.25"/>
+				<in1 component_id="21" node_index="0">
+					<v bools="0" 01="389.415283" 02="14815.02832" 03="8" 04="0" 05="0" 06="-0.249705" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="358.494324" 03="89.893806" 04="0" 05="14820.145508" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c0>
+			<c1 id="12" count="6" offset="0">
+				<pos x="-4" y="0"/>
+				<inc component_id="0" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="6" node_index="0" v="389.401276"/>
+				<in2 component_id="8" node_index="0" v="14815.021484"/>
+				<in3 component_id="10" node_index="0" v="8"/>
+				<in4 component_id="16" node_index="0" v="0"/>
+				<in5 component_id="17" node_index="0" v="0"/>
+				<in6 component_id="23" node_index="0" v="-0.249684"/>
+				<out1>
+					<v bools="0" 01="389.401276" 02="14815.021484" 03="8" 04="0" 05="0" 06="-0.249684" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c1>
+			<c2 id="20" i="0">
+				<pos x="-1" y="1.75"/>
+				<in1 component_id="11" node_index="0">
+					<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="false"/>
+			</c2>
+			<c3 id="21" count="1" offset="6">
+				<pos x="-4" y="-0.75"/>
+				<inc component_id="12" node_index="0">
+					<v bools="0" 01="389.408203" 02="14815.025391" 03="8" 04="0" 05="0" 06="-0.249694" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="13" node_index="0" v="false"/>
+				<out1>
+					<v bools="0" 01="389.408203" 02="14815.025391" 03="8" 04="0" 05="0" 06="-0.249694" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c3>
+			<c4 id="24" i="1">
+				<pos x="-1" y="1.25"/>
+				<in1 component_id="11" node_index="0">
+					<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="358.494293"/>
+			</c4>
+			<c5 id="28" te="0" pe="0" pes="false">
+				<pos x="1" y="-0.5"/>
+				<in1 component_id="37" node_index="0" v="0"/>
+				<in2 component_id="36" node_index="0" v="-268.589447"/>
+				<in3 component_id="31" node_index="0" v="false"/>
+				<out1 v="0"/>
+				<kp text="0.1" value="0.1"/>
+				<ki text="0.00001" value="0.00001"/>
+				<kd text="0" value="0"/>
+			</c5>
+			<c6 id="30" i="2">
+				<pos x="-1" y="0.75"/>
+				<in1 component_id="11" node_index="0">
+					<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="89.897545"/>
+			</c6>
+			<c7 id="31" i="3">
+				<pos x="-1" y="0.25"/>
+				<in1 component_id="11" node_index="0">
+					<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="false"/>
+			</c7>
+			<c8 id="35" i="4">
+				<pos x="-1" y="-0.75"/>
+				<in1 component_id="11" node_index="0">
+					<v bools="0" 01="0" 02="358.494293" 03="89.897545" 04="0" 05="14820.148438" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="14820.148438"/>
+			</c8>
+			<c9 id="36">
+				<pos x="1" y="0.5"/>
+				<in1 component_id="30" node_index="0" v="89.901207"/>
+				<in2 component_id="24" node_index="0" v="358.494263"/>
+				<out1 v="-268.593048"/>
+			</c9>
+			<c10 id="37">
+				<pos x="1" y="1.25"/>
+				<out1 v="0"/>
+				<n text="0" value="0"/>
+			</c10>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="5">
+				<pos x="-1" y="-0.25"/>
+				<in1 component_id="11" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c0>
+			<c1 id="6">
+				<pos x="-5.5" y="2.25"/>
+				<in1 component_id="0" node_index="0" v="389.401276"/>
+				<out1 v="389.401276"/>
+			</c1>
+			<c2 id="8">
+				<pos x="-5.5" y="1.75"/>
+				<in1 component_id="0" node_index="0" v="14815.021484"/>
+				<out1 v="14815.021484"/>
+			</c2>
+			<c3 id="10">
+				<pos x="-5.5" y="1.25"/>
+				<in1 component_id="0" node_index="0" v="8"/>
+				<out1 v="8"/>
+			</c3>
+			<c4 id="13">
+				<pos x="-5.5" y="-0.75"/>
+				<in1 component_id="0" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c4>
+			<c5 id="16">
+				<pos x="-5.5" y="0.75"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c5>
+			<c6 id="17">
+				<pos x="-5.5" y="0.25"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c6>
+			<c7 id="19">
+				<pos x="2.5" y="1.75"/>
+				<in1 component_id="20" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c7>
+			<c8 id="23">
+				<pos x="-5.5" y="-0.25"/>
+				<in1 component_id="0" node_index="0" v="-0.249684"/>
+				<out1 v="-0.249684"/>
+			</c8>
+			<c9 id="27">
+				<pos x="2.5" y="0"/>
+				<in1 component_id="28" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c9>
+			<c10 id="34">
+				<pos x="-1" y="-1.25"/>
+				<in1 component_id="35" node_index="0" v="14820.148438"/>
+				<out1 v="14820.148438"/>
+			</c10>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

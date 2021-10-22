@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Boat Control Fin Controller" description="Controls boat fins for stabilisation" hide_in_inventory="false" width="2" length="2" id_counter="18" id_counter_node="4" transform_index="0" sym0="0" sym1="64" sym2="240" sym3="72" sym4="4" sym5="388" sym6="580" sym7="1060" sym8="1060" sym9="2020" sym10="4" sym11="4" sym12="72" sym13="240" sym14="64" sym15="0">
+	<nodes>
+		<n id="1" component_id="2" built_slot_index="0">
+			<node orientation="0" label="Roll Tilt Sensor" mode="1" type="1" description="Tilt sensor from side of ship" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="4" built_slot_index="0">
+			<node orientation="0" label="Pitch Tilt Sensor" mode="1" type="1" description="Tilt sensor from front of ship" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="7" built_slot_index="0">
+			<node orientation="0" label="Left Fins" mode="0" type="1" description="Signal for left fins" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="10" built_slot_index="0">
+			<node orientation="0" label="Rign Fins" mode="0" type="1" description="Signal for right fins" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="-427082131" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="45">
+				<object id="14" e="x*4">
+					<pos x="-1.75" y="0.75"/>
+					<in1 component_id="4" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="45">
+				<object id="15" e="x*-1">
+					<pos x="-1.75" y="0.25"/>
+					<in1 component_id="14" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="45">
+				<object id="16" e="x*4">
+					<pos x="-1.75" y="-0.25"/>
+					<in1 component_id="2" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="6">
+				<object id="17">
+					<pos x="-0.25" y="0.5"/>
+					<in1 component_id="14" node_index="0" v="0"/>
+					<in2 component_id="16" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="6">
+				<object id="18">
+					<pos x="-0.25" y="-0.25"/>
+					<in1 component_id="15" node_index="0" v="0"/>
+					<in2 component_id="16" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="2">
+				<object id="2">
+					<pos x="-3.25" y="-0.25"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="4">
+					<pos x="-3.25" y="0.75"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="7">
+					<pos x="1.5" y="0.25"/>
+					<in1 component_id="18" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="10">
+					<pos x="1.5" y="0.75"/>
+					<in1 component_id="17" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="14" e="x*4">
+				<pos x="-1.75" y="0.75"/>
+				<in1 component_id="4" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c0>
+			<c1 id="15" e="x*-1">
+				<pos x="-1.75" y="0.25"/>
+				<in1 component_id="14" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c1>
+			<c2 id="16" e="x*4">
+				<pos x="-1.75" y="-0.25"/>
+				<in1 component_id="2" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c2>
+			<c3 id="17">
+				<pos x="-0.25" y="0.5"/>
+				<in1 component_id="14" node_index="0" v="0"/>
+				<in2 component_id="16" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c3>
+			<c4 id="18">
+				<pos x="-0.25" y="-0.25"/>
+				<in1 component_id="15" node_index="0" v="0"/>
+				<in2 component_id="16" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c4>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="2">
+				<pos x="-3.25" y="-0.25"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c0>
+			<c1 id="4">
+				<pos x="-3.25" y="0.75"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c1>
+			<c2 id="7">
+				<pos x="1.5" y="0.25"/>
+				<in1 component_id="18" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c2>
+			<c3 id="10">
+				<pos x="1.5" y="0.75"/>
+				<in1 component_id="17" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c3>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

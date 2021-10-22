@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Waypoint Tracker" description="Tracks an ordered list of waypoints" hide_in_inventory="false" width="3" length="4" id_counter="60" id_counter_node="16" transform_index="0" sym0="0" sym1="0" sym2="4096" sym3="14336" sym4="4096" sym5="1024" sym6="0" sym7="256" sym8="0" sym9="64" sym10="0" sym11="16" sym12="4" sym13="14" sym14="4" sym15="0">
+	<nodes>
+		<n id="2" component_id="5" built_slot_index="0">
+			<node orientation="0" label="Waypoint List" mode="0" type="6" description="" flags="0">
+				<position x="1" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="3" component_id="7" built_slot_index="0">
+			<node orientation="0" label="Display On/Off" mode="0" type="0" description="The input signal to be processed." flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="7" component_id="19" built_slot_index="0">
+			<node orientation="0" label="Waypoint Selector" mode="0" type="6" description="" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="8" component_id="22" built_slot_index="0">
+			<node orientation="0" label="Waypoint List Display" mode="1" type="5" description="" flags="0">
+				<position x="2" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="9" component_id="23" built_slot_index="0">
+			<node orientation="0" label="Waypoint Selector Display" mode="1" type="5" description="" flags="0">
+				<position x="2" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="10" component_id="26" built_slot_index="0">
+			<node orientation="0" label="GPS x" mode="1" type="1" description="The input signal to be processed." flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="11" component_id="28" built_slot_index="0">
+			<node orientation="0" label="GPS y" mode="1" type="1" description="The input signal to be processed." flags="0">
+				<position x="0" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="12" component_id="39" built_slot_index="0">
+			<node orientation="0" label="Lock" mode="1" type="0" description="Lock in a waypoint" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="14" component_id="51" built_slot_index="0">
+			<node orientation="0" label="Clear Top Waypoint" mode="1" type="0" description="" flags="0">
+				<position x="0" y="0" z="3"/>
+			</node>
+		</n>
+		<n id="15" component_id="54" built_slot_index="0">
+			<node orientation="0" label="Current Waypoint x" mode="0" type="1" description="" flags="0">
+				<position x="1" y="0" z="3"/>
+			</node>
+		</n>
+		<n id="16" component_id="57" built_slot_index="0">
+			<node orientation="0" label="Current Waypoint y" mode="0" type="1" description="" flags="0">
+				<position x="2" y="0" z="3"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="10" script='waypoints = {}
+waypointsToShow = 5
+displayOn = true
+topWaypointIndex = 1
+tick = 0
+lastDeleteTick = 0
+function onTick()
+	touchX = input.getNumber(3)
+	touchY = input.getNumber(4)
+	isPressed = input.getBool(1)
+	waypointx = input.getNumber(5)
+	waypointy = input.getNumber(6)
+	lockWaypoint = input.getBool(7)
+	deleteWaypoint = input.getBool(8)
+
+	if lockWaypoint then addWaypoint(waypointx, waypointy) end
+	for i=1, #waypoints, 1 do
+		local curWaypoint = i + topWaypointIndex - 1
+		if isPressed and isPointInRectangle(touchX, touchY, 1, (i-1)*boxHeight, boxWidth, boxHeight) 
+		and tick - lastDeleteTick &gt; 60 then
+			table.remove(waypoints, curWaypoint)
+			lastDeleteTick = tick
+		end
+	end
+	output.setBool(1, displayOn)
+	if deleteWaypoint and #waypoints &gt; 0 then table.remove(waypoints, 1) end
+	if #waypoints &gt; 0 then
+		output.setNumber(2, waypoints[1][1])
+		output.setNumber(3, waypoints[1][2])
+	end
+	tick = tick + 1
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	boxWidth = w - 2
+	boxHeight = h / waypointsToShow					
+	screen.setColor(100, 100, 100)
+	drawLimit = waypointsToShow
+	if #waypoints &lt; waypointsToShow then drawLimit = #waypoints end
+	for i=1, drawLimit, 1 do
+		local curWaypoint = i + topWaypointIndex - 1
+		screen.drawRect(1, (i-1)*boxHeight, boxWidth, boxHeight)
+		screen.drawTextBox(1, (i-1)*boxHeight, boxWidth, boxHeight,
+		math.floor(waypoints[curWaypoint][1]) .. "," .. math.floor(waypoints[curWaypoint][2]), 0, 0)
+		
+	end
+end
+
+function isPointInRectangle(x, y, rectX, rectY, rectW, rectH)
+	return x &gt; rectX and y &gt; rectY and x &lt; rectX+rectW and y &lt; rectY+rectH
+end
+function addWaypoint(x, y)
+	waypoints[#waypoints + 1] = {x,y}
+end
+'>
+					<pos x="2.75" y="-3.75"/>
+					<in1 component_id="34" node_index="0">
+						<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.444763" 06="14815.040039" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+			<c type="29">
+				<object id="11" i="0">
+					<pos x="4.25" y="-1.5"/>
+					<in1 component_id="10" node_index="0">
+						<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="true"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="24" script="co = 30
+arrowSpacing = co/10
+arrowWidth = co/3
+arrowHeight = co/3
+centerButtonr = co/5
+followBoat = true
+function onTick()
+gpsx = input.getNumber(10)
+gpsy = input.getNumber(11)
+inputX = input.getNumber(3)
+inputY = input.getNumber(4)
+isPressed = input.getBool(1)
+output.setNumber(1, screenCenterx)
+output.setNumber(2, screenCentery)
+isPressingUp = isPressed and isPointInRectangle(inputX, inputY, 
+	centerx - (arrowWidth / 2), centery - centerButtonr - arrowSpacing - arrowHeight,
+	arrowWidth, arrowHeight)
+isPressingDown = isPressed and isPointInRectangle(inputX, inputY,
+	centerx - (arrowWidth / 2), centery + centerButtonr + arrowSpacing,
+	arrowWidth, arrowHeight)
+isPressingLeft = isPressed and isPointInRectangle(inputX, inputY,
+	centerx - centerButtonr - arrowSpacing - arrowHeight, centery - (arrowWidth / 2),
+	arrowWidth, arrowHeight)
+isPressingRight = isPressed and isPointInRectangle(inputX, inputY,
+	centerx + centerButtonr + arrowSpacing, centery - (arrowWidth / 2),
+	arrowWidth, arrowHeight) 
+isPressingCircle = isPressed and isPointInCircle(inputX, inputY, centerx, centery, centerButtonr)
+end
+function onDraw()
+w = screen.getWidth()
+h = screen.getHeight()
+centerx = w - co
+centery = h - co
+if followBoat then
+	screenCenterx = gpsx
+	screenCentery = gpsy
+end
+screen.drawMap(screenCenterx, screenCentery, 5)
+screen.setColor(200, 200, 200)
+screen.drawLine((w/2) - 5, h/2, (w/2) + 5, h/2)
+screen.drawLine(w/2, (h/2) - 5, w/2, (h/2) + 5)
+screen.setColor(255, 0, 0)
+if isPressingCircle then
+	screen.drawCircleF(w - co, h - co, centerButtonr)
+	followBoat = true
+end
+screen.drawCircle(w - co, h - co, centerButtonr)
+if isPressingUp then
+screen.drawTriangleF(centerx, centery - centerButtonr - arrowSpacing - arrowHeight,
+	centerx + (arrowWidth / 2), centery - centerButtonr - arrowSpacing,
+	centerx - (arrowWidth / 2), centery - centerButtonr - arrowSpacing)
+followBoat = false
+screenCentery = screenCentery + 20
+end
+if isPressingDown then
+screen.drawTriangleF(centerx, centery + centerButtonr + arrowSpacing + arrowHeight,
+	centerx - (arrowWidth / 2), centery + centerButtonr + arrowSpacing,
+	centerx + (arrowWidth / 2), centery + centerButtonr + arrowSpacing)
+followBoat = false
+screenCentery = screenCentery - 20
+end
+if isPressingLeft then
+screen.drawTriangleF(centerx - centerButtonr - arrowSpacing - arrowHeight, centery,
+	centerx - centerButtonr - arrowSpacing, centery - (arrowWidth / 2),
+	centerx - centerButtonr - arrowSpacing, centery + (arrowWidth / 2))
+followBoat = false
+screenCenterx = screenCenterx - 20
+end		
+if isPressingRight then
+screen.drawTriangleF(centerx + centerButtonr + arrowSpacing + arrowHeight, centery,
+	centerx + centerButtonr + arrowSpacing, centery + (arrowWidth / 2),
+	centerx + centerButtonr + arrowSpacing, centery - (arrowWidth / 2))
+followBoat = false
+screenCenterx = screenCenterx + 20
+end
+screen.drawTriangle(centerx, centery - centerButtonr - arrowSpacing - arrowHeight,
+	centerx + (arrowWidth / 2), centery - centerButtonr - arrowSpacing,
+	centerx - (arrowWidth / 2), centery - centerButtonr - arrowSpacing)
+screen.drawTriangle(centerx + centerButtonr + arrowSpacing + arrowHeight, centery,
+	centerx + centerButtonr + arrowSpacing, centery + (arrowWidth / 2),
+	centerx + centerButtonr + arrowSpacing, centery - (arrowWidth / 2))
+screen.drawTriangle(centerx, centery + centerButtonr + arrowSpacing + arrowHeight,
+	centerx - (arrowWidth / 2), centery + centerButtonr + arrowSpacing,
+	centerx + (arrowWidth / 2), centery + centerButtonr + arrowSpacing)
+screen.drawTriangle(centerx - centerButtonr - arrowSpacing - arrowHeight, centery,
+	centerx - centerButtonr - arrowSpacing, centery - (arrowWidth / 2),
+	centerx - centerButtonr - arrowSpacing, centery + (arrowWidth / 2))
+end
+function isPointInRectangle(x, y, rectX, rectY, rectW, rectH)
+return x &gt; rectX and y &gt; rectY and x &lt; rectX+rectW and y &lt; rectY+rectH
+end
+function isPointInCircle(x, y, centerX, centerY, r)
+return math.sqrt((centerX - x)^2 + (centerY - y)^2) &lt; r
+end
+">
+					<pos x="-1.5" y="-3.5"/>
+					<in1 component_id="29" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="389.408203" 11="14815.025391" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="389.415283" 02="14815.02832" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+			<c type="40">
+				<object id="29" count="2" offset="9">
+					<pos x="-1.5" y="-2.75"/>
+					<inc component_id="46" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="26" node_index="0" v="389.401276"/>
+					<in2 component_id="28" node_index="0" v="14815.021484"/>
+					<out1>
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="389.401276" 11="14815.021484" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="41">
+				<object id="34" count="2" offset="6">
+					<pos x="2.75" y="-3"/>
+					<inc component_id="49" node_index="0">
+						<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.437225" 06="14815.037109" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="50" node_index="0" v="false"/>
+					<in2 component_id="60" node_index="0" v="false"/>
+					<out1>
+						<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.437225" 06="14815.037109" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="36" i="0">
+					<pos x="0.25" y="-2"/>
+					<in1 component_id="24" node_index="0">
+						<v bools="0" 01="389.422455" 02="14815.03125" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="389.422455"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="37" i="1">
+					<pos x="0.25" y="-2.5"/>
+					<in1 component_id="24" node_index="0">
+						<v bools="0" 01="389.422455" 02="14815.03125" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="14815.03125"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="42" i="2">
+					<pos x="-3.25" y="-2"/>
+					<in1 component_id="23" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="43" i="3">
+					<pos x="-3.25" y="-2.5"/>
+					<in1 component_id="23" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="44" i="0">
+					<pos x="-3.25" y="-1.5"/>
+					<in1 component_id="23" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="40">
+				<object id="46" count="2" offset="2">
+					<pos x="-1.5" y="-1.75"/>
+					<inc component_id="47" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="42" node_index="0" v="0"/>
+					<in2 component_id="43" node_index="0" v="0"/>
+					<out1>
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="41">
+				<object id="47" count="1" offset="0">
+					<pos x="-1.5" y="-0.75"/>
+					<inc component_id="23" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="44" node_index="0" v="false"/>
+					<out1>
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="40">
+				<object id="49" count="2" offset="4">
+					<pos x="2.75" y="-2"/>
+					<inc component_id="22" node_index="0">
+						<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="36" node_index="0" v="389.429779"/>
+					<in2 component_id="37" node_index="0" v="14815.03418"/>
+					<out1>
+						<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.429779" 06="14815.03418" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="48">
+				<object id="50" m="1" p="false">
+					<pos x="1.5" y="-3"/>
+					<in1 component_id="39" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="58" i="1">
+					<pos x="4.25" y="-2"/>
+					<in1 component_id="10" node_index="0">
+						<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="59" i="2">
+					<pos x="4.25" y="-2.5"/>
+					<in1 component_id="10" node_index="0">
+						<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="48">
+				<object id="60" m="1" p="false">
+					<pos x="1.5" y="-3.5"/>
+					<in1 component_id="51" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="7">
+				<object id="5">
+					<pos x="4.25" y="-4"/>
+					<in1 component_id="10" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="1">
+				<object id="7">
+					<pos x="5.75" y="-1.5"/>
+					<in1 component_id="11" node_index="0" v="true"/>
+					<out1 v="true"/>
+				</object>
+			</c>
+			<c type="7">
+				<object id="19">
+					<pos x="0.25" y="-3.5"/>
+					<in1 component_id="24" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="4">
+				<object id="22">
+					<pos x="0.25" y="-1.5"/>
+					<in1 component_id="0" node_index="0">
+						<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1>
+						<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="4">
+				<object id="23">
+					<pos x="-3.25" y="-1"/>
+					<in1 component_id="0" node_index="0">
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1>
+						<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="2">
+				<object id="26">
+					<pos x="-3.25" y="-3"/>
+					<in1 component_id="0" node_index="0" v="389.401276"/>
+					<out1 v="389.401276"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="28">
+					<pos x="-3.25" y="-3.5"/>
+					<in1 component_id="0" node_index="0" v="14815.021484"/>
+					<out1 v="14815.021484"/>
+				</object>
+			</c>
+			<c type="0">
+				<object id="39">
+					<pos x="0.25" y="-3"/>
+					<in1 component_id="0" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="0">
+				<object id="51">
+					<pos x="0.25" y="-4"/>
+					<in1 component_id="0" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="54">
+					<pos x="5.75" y="-2"/>
+					<in1 component_id="58" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="57">
+					<pos x="5.75" y="-2.5"/>
+					<in1 component_id="59" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="10" script='waypoints = {}
+waypointsToShow = 5
+displayOn = true
+topWaypointIndex = 1
+tick = 0
+lastDeleteTick = 0
+function onTick()
+	touchX = input.getNumber(3)
+	touchY = input.getNumber(4)
+	isPressed = input.getBool(1)
+	waypointx = input.getNumber(5)
+	waypointy = input.getNumber(6)
+	lockWaypoint = input.getBool(7)
+	deleteWaypoint = input.getBool(8)
+
+	if lockWaypoint then addWaypoint(waypointx, waypointy) end
+	for i=1, #waypoints, 1 do
+		local curWaypoint = i + topWaypointIndex - 1
+		if isPressed and isPointInRectangle(touchX, touchY, 1, (i-1)*boxHeight, boxWidth, boxHeight) 
+		and tick - lastDeleteTick &gt; 60 then
+			table.remove(waypoints, curWaypoint)
+			lastDeleteTick = tick
+		end
+	end
+	output.setBool(1, displayOn)
+	if deleteWaypoint and #waypoints &gt; 0 then table.remove(waypoints, 1) end
+	if #waypoints &gt; 0 then
+		output.setNumber(2, waypoints[1][1])
+		output.setNumber(3, waypoints[1][2])
+	end
+	tick = tick + 1
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	boxWidth = w - 2
+	boxHeight = h / waypointsToShow					
+	screen.setColor(100, 100, 100)
+	drawLimit = waypointsToShow
+	if #waypoints &lt; waypointsToShow then drawLimit = #waypoints end
+	for i=1, drawLimit, 1 do
+		local curWaypoint = i + topWaypointIndex - 1
+		screen.drawRect(1, (i-1)*boxHeight, boxWidth, boxHeight)
+		screen.drawTextBox(1, (i-1)*boxHeight, boxWidth, boxHeight,
+		math.floor(waypoints[curWaypoint][1]) .. "," .. math.floor(waypoints[curWaypoint][2]), 0, 0)
+		
+	end
+end
+
+function isPointInRectangle(x, y, rectX, rectY, rectW, rectH)
+	return x &gt; rectX and y &gt; rectY and x &lt; rectX+rectW and y &lt; rectY+rectH
+end
+function addWaypoint(x, y)
+	waypoints[#waypoints + 1] = {x,y}
+end
+'>
+				<pos x="2.75" y="-3.75"/>
+				<in1 component_id="34" node_index="0">
+					<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.444763" 06="14815.040039" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c0>
+			<c1 id="11" i="0">
+				<pos x="4.25" y="-1.5"/>
+				<in1 component_id="10" node_index="0">
+					<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="true"/>
+			</c1>
+			<c2 id="24" script="co = 30
+arrowSpacing = co/10
+arrowWidth = co/3
+arrowHeight = co/3
+centerButtonr = co/5
+followBoat = true
+function onTick()
+gpsx = input.getNumber(10)
+gpsy = input.getNumber(11)
+inputX = input.getNumber(3)
+inputY = input.getNumber(4)
+isPressed = input.getBool(1)
+output.setNumber(1, screenCenterx)
+output.setNumber(2, screenCentery)
+isPressingUp = isPressed and isPointInRectangle(inputX, inputY, 
+	centerx - (arrowWidth / 2), centery - centerButtonr - arrowSpacing - arrowHeight,
+	arrowWidth, arrowHeight)
+isPressingDown = isPressed and isPointInRectangle(inputX, inputY,
+	centerx - (arrowWidth / 2), centery + centerButtonr + arrowSpacing,
+	arrowWidth, arrowHeight)
+isPressingLeft = isPressed and isPointInRectangle(inputX, inputY,
+	centerx - centerButtonr - arrowSpacing - arrowHeight, centery - (arrowWidth / 2),
+	arrowWidth, arrowHeight)
+isPressingRight = isPressed and isPointInRectangle(inputX, inputY,
+	centerx + centerButtonr + arrowSpacing, centery - (arrowWidth / 2),
+	arrowWidth, arrowHeight) 
+isPressingCircle = isPressed and isPointInCircle(inputX, inputY, centerx, centery, centerButtonr)
+end
+function onDraw()
+w = screen.getWidth()
+h = screen.getHeight()
+centerx = w - co
+centery = h - co
+if followBoat then
+	screenCenterx = gpsx
+	screenCentery = gpsy
+end
+screen.drawMap(screenCenterx, screenCentery, 5)
+screen.setColor(200, 200, 200)
+screen.drawLine((w/2) - 5, h/2, (w/2) + 5, h/2)
+screen.drawLine(w/2, (h/2) - 5, w/2, (h/2) + 5)
+screen.setColor(255, 0, 0)
+if isPressingCircle then
+	screen.drawCircleF(w - co, h - co, centerButtonr)
+	followBoat = true
+end
+screen.drawCircle(w - co, h - co, centerButtonr)
+if isPressingUp then
+screen.drawTriangleF(centerx, centery - centerButtonr - arrowSpacing - arrowHeight,
+	centerx + (arrowWidth / 2), centery - centerButtonr - arrowSpacing,
+	centerx - (arrowWidth / 2), centery - centerButtonr - arrowSpacing)
+followBoat = false
+screenCentery = screenCentery + 20
+end
+if isPressingDown then
+screen.drawTriangleF(centerx, centery + centerButtonr + arrowSpacing + arrowHeight,
+	centerx - (arrowWidth / 2), centery + centerButtonr + arrowSpacing,
+	centerx + (arrowWidth / 2), centery + centerButtonr + arrowSpacing)
+followBoat = false
+screenCentery = screenCentery - 20
+end
+if isPressingLeft then
+screen.drawTriangleF(centerx - centerButtonr - arrowSpacing - arrowHeight, centery,
+	centerx - centerButtonr - arrowSpacing, centery - (arrowWidth / 2),
+	centerx - centerButtonr - arrowSpacing, centery + (arrowWidth / 2))
+followBoat = false
+screenCenterx = screenCenterx - 20
+end		
+if isPressingRight then
+screen.drawTriangleF(centerx + centerButtonr + arrowSpacing + arrowHeight, centery,
+	centerx + centerButtonr + arrowSpacing, centery + (arrowWidth / 2),
+	centerx + centerButtonr + arrowSpacing, centery - (arrowWidth / 2))
+followBoat = false
+screenCenterx = screenCenterx + 20
+end
+screen.drawTriangle(centerx, centery - centerButtonr - arrowSpacing - arrowHeight,
+	centerx + (arrowWidth / 2), centery - centerButtonr - arrowSpacing,
+	centerx - (arrowWidth / 2), centery - centerButtonr - arrowSpacing)
+screen.drawTriangle(centerx + centerButtonr + arrowSpacing + arrowHeight, centery,
+	centerx + centerButtonr + arrowSpacing, centery + (arrowWidth / 2),
+	centerx + centerButtonr + arrowSpacing, centery - (arrowWidth / 2))
+screen.drawTriangle(centerx, centery + centerButtonr + arrowSpacing + arrowHeight,
+	centerx - (arrowWidth / 2), centery + centerButtonr + arrowSpacing,
+	centerx + (arrowWidth / 2), centery + centerButtonr + arrowSpacing)
+screen.drawTriangle(centerx - centerButtonr - arrowSpacing - arrowHeight, centery,
+	centerx - centerButtonr - arrowSpacing, centery - (arrowWidth / 2),
+	centerx - centerButtonr - arrowSpacing, centery + (arrowWidth / 2))
+end
+function isPointInRectangle(x, y, rectX, rectY, rectW, rectH)
+return x &gt; rectX and y &gt; rectY and x &lt; rectX+rectW and y &lt; rectY+rectH
+end
+function isPointInCircle(x, y, centerX, centerY, r)
+return math.sqrt((centerX - x)^2 + (centerY - y)^2) &lt; r
+end
+">
+				<pos x="-1.5" y="-3.5"/>
+				<in1 component_id="29" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="389.408203" 11="14815.025391" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="389.415283" 02="14815.02832" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c2>
+			<c3 id="29" count="2" offset="9">
+				<pos x="-1.5" y="-2.75"/>
+				<inc component_id="46" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="26" node_index="0" v="389.401276"/>
+				<in2 component_id="28" node_index="0" v="14815.021484"/>
+				<out1>
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="389.401276" 11="14815.021484" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c3>
+			<c4 id="34" count="2" offset="6">
+				<pos x="2.75" y="-3"/>
+				<inc component_id="49" node_index="0">
+					<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.437225" 06="14815.037109" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="50" node_index="0" v="false"/>
+				<in2 component_id="60" node_index="0" v="false"/>
+				<out1>
+					<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.437225" 06="14815.037109" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c4>
+			<c5 id="36" i="0">
+				<pos x="0.25" y="-2"/>
+				<in1 component_id="24" node_index="0">
+					<v bools="0" 01="389.422455" 02="14815.03125" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="389.422455"/>
+			</c5>
+			<c6 id="37" i="1">
+				<pos x="0.25" y="-2.5"/>
+				<in1 component_id="24" node_index="0">
+					<v bools="0" 01="389.422455" 02="14815.03125" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="14815.03125"/>
+			</c6>
+			<c7 id="42" i="2">
+				<pos x="-3.25" y="-2"/>
+				<in1 component_id="23" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="0"/>
+			</c7>
+			<c8 id="43" i="3">
+				<pos x="-3.25" y="-2.5"/>
+				<in1 component_id="23" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="0"/>
+			</c8>
+			<c9 id="44" i="0">
+				<pos x="-3.25" y="-1.5"/>
+				<in1 component_id="23" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="false"/>
+			</c9>
+			<c10 id="46" count="2" offset="2">
+				<pos x="-1.5" y="-1.75"/>
+				<inc component_id="47" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="42" node_index="0" v="0"/>
+				<in2 component_id="43" node_index="0" v="0"/>
+				<out1>
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c10>
+			<c11 id="47" count="1" offset="0">
+				<pos x="-1.5" y="-0.75"/>
+				<inc component_id="23" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="44" node_index="0" v="false"/>
+				<out1>
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c11>
+			<c12 id="49" count="2" offset="4">
+				<pos x="2.75" y="-2"/>
+				<inc component_id="22" node_index="0">
+					<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="36" node_index="0" v="389.429779"/>
+				<in2 component_id="37" node_index="0" v="14815.03418"/>
+				<out1>
+					<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="389.429779" 06="14815.03418" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c12>
+			<c13 id="50" m="1" p="false">
+				<pos x="1.5" y="-3"/>
+				<in1 component_id="39" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c13>
+			<c14 id="58" i="1">
+				<pos x="4.25" y="-2"/>
+				<in1 component_id="10" node_index="0">
+					<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="0"/>
+			</c14>
+			<c15 id="59" i="2">
+				<pos x="4.25" y="-2.5"/>
+				<in1 component_id="10" node_index="0">
+					<v bools="1" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="0"/>
+			</c15>
+			<c16 id="60" m="1" p="false">
+				<pos x="1.5" y="-3.5"/>
+				<in1 component_id="51" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c16>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="5">
+				<pos x="4.25" y="-4"/>
+				<in1 component_id="10" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c0>
+			<c1 id="7">
+				<pos x="5.75" y="-1.5"/>
+				<in1 component_id="11" node_index="0" v="true"/>
+				<out1 v="true"/>
+			</c1>
+			<c2 id="19">
+				<pos x="0.25" y="-3.5"/>
+				<in1 component_id="24" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c2>
+			<c3 id="22">
+				<pos x="0.25" y="-1.5"/>
+				<in1 component_id="0" node_index="0">
+					<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1>
+					<v bools="0" 01="96" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c3>
+			<c4 id="23">
+				<pos x="-3.25" y="-1"/>
+				<in1 component_id="0" node_index="0">
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1>
+					<v bools="0" 01="160" 02="96" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c4>
+			<c5 id="26">
+				<pos x="-3.25" y="-3"/>
+				<in1 component_id="0" node_index="0" v="389.401276"/>
+				<out1 v="389.401276"/>
+			</c5>
+			<c6 id="28">
+				<pos x="-3.25" y="-3.5"/>
+				<in1 component_id="0" node_index="0" v="14815.021484"/>
+				<out1 v="14815.021484"/>
+			</c6>
+			<c7 id="39">
+				<pos x="0.25" y="-3"/>
+				<in1 component_id="0" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c7>
+			<c8 id="51">
+				<pos x="0.25" y="-4"/>
+				<in1 component_id="0" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c8>
+			<c9 id="54">
+				<pos x="5.75" y="-2"/>
+				<in1 component_id="58" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c9>
+			<c10 id="57">
+				<pos x="5.75" y="-2.5"/>
+				<in1 component_id="59" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c10>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

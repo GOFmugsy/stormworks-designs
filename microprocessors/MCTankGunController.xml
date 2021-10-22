@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Turret Velocity Pivot Gun Controller" description="Aims gun to follow look info from seat" hide_in_inventory="false" width="3" length="4" id_counter="45" id_counter_node="11" transform_index="0" sym0="0" sym1="0" sym2="0" sym3="0" sym4="8184" sym5="8196" sym6="16386" sym7="32766" sym8="68" sym9="68" sym10="120" sym11="384" sym12="1536" sym13="6144" sym14="0" sym15="0">
+	<nodes>
+		<n id="1" component_id="2" built_slot_index="0">
+			<node orientation="0" label="Look x" mode="1" type="1" description="" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="4" built_slot_index="0">
+			<node orientation="0" label="Look y" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="3" component_id="7" built_slot_index="0">
+			<node orientation="0" label="Left Gun Pivot Speed" mode="0" type="1" description="" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="10" built_slot_index="0">
+			<node orientation="0" label="Right Gun Pivot Speed" mode="0" type="1" description="" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="5" component_id="12" built_slot_index="0">
+			<node orientation="0" label="Left Gun Current Pivot" mode="1" type="1" description="" flags="0">
+				<position x="2" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="6" component_id="14" built_slot_index="0">
+			<node orientation="0" label="Righ Gun Current Pivot" mode="1" type="1" description="" flags="0">
+				<position x="2" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="8" component_id="35" built_slot_index="0">
+			<node orientation="0" label="Right Display" mode="0" type="6" description="" flags="0">
+				<position x="1" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="9" component_id="38" built_slot_index="0">
+			<node orientation="0" label="Left Display" mode="0" type="6" description="" flags="0">
+				<position x="0" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="10" component_id="41" built_slot_index="0">
+			<node orientation="0" label="Left Gun Rounds" mode="1" type="1" description="" flags="0">
+				<position x="0" y="0" z="3"/>
+			</node>
+		</n>
+		<n id="11" component_id="42" built_slot_index="0">
+			<node orientation="0" label="Right Gun Rounds" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="3"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="23">
+				<object id="29" te="0" pe="0" pes="true">
+					<pos x="0.5" y="-1.75"/>
+					<in1 component_id="4" node_index="0" v="0"/>
+					<in2 component_id="14" node_index="0" v="0"/>
+					<in3 component_id="31" node_index="0" v="true"/>
+					<out1 v="0"/>
+					<kp text="3" value="3"/>
+					<ki text="0" value="0"/>
+					<kd text="0.1" value="0.1"/>
+				</object>
+			</c>
+			<c type="23">
+				<object id="30" te="0" pe="0" pes="true">
+					<pos x="0.5" y="-0.75"/>
+					<in1 component_id="4" node_index="0" v="0"/>
+					<in2 component_id="12" node_index="0" v="0"/>
+					<in3 component_id="31" node_index="0" v="true"/>
+					<out1 v="0"/>
+					<kp text="3" value="3"/>
+					<ki text="0" value="0"/>
+					<kd text="0.1" value="0.1"/>
+				</object>
+			</c>
+			<c type="16">
+				<object id="31">
+					<pos x="0.5" y="-2.25"/>
+					<out1 v="true"/>
+				</object>
+			</c>
+			<c type="40">
+				<object id="43" count="2" offset="0">
+					<pos x="0.5" y="-3.25"/>
+					<inc component_id="0" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="41" node_index="0" v="0"/>
+					<in2 component_id="42" node_index="0" v="0"/>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="56">
+				<object id="44" script="-- Tick function that will be executed every logic tick
+function onTick()
+	ammoCount = input.getNumber(1)
+
+end
+
+-- Draw function that will be executed when this script renders to a screen
+function onDraw()
+	w = screen.getWidth()				  -- Get the screen's width and height
+	h = screen.getHeight()					
+	screen.setColor(0, 255, 0)			 -- Set draw color to green
+	screen.drawTextBox(1, 1, w, h, ammoCount, 0, 0)
+end">
+					<pos x="2" y="-3"/>
+					<in1 component_id="43" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+			<c type="56">
+				<object id="45" script="-- Tick function that will be executed every logic tick
+function onTick()
+	ammoCount = input.getNumber(2)
+
+end
+
+-- Draw function that will be executed when this script renders to a screen
+function onDraw()
+	w = screen.getWidth()				  -- Get the screen's width and height
+	h = screen.getHeight()					
+	screen.setColor(0, 255, 0)			 -- Set draw color to green
+	screen.drawTextBox(1, 1, w, h, ammoCount, 0, 0)
+end">
+					<pos x="2" y="-3.75"/>
+					<in1 component_id="43" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="2">
+				<object id="2">
+					<pos x="-1" y="-0.25"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="4">
+					<pos x="-1" y="-0.75"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="7">
+					<pos x="2" y="-0.75"/>
+					<in1 component_id="30" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="10">
+					<pos x="2" y="-0.25"/>
+					<in1 component_id="29" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="12">
+					<pos x="-1" y="-1.25"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="14">
+					<pos x="-1" y="-1.75"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="7">
+				<object id="35">
+					<pos x="3.5" y="-3.75"/>
+					<in1 component_id="45" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="7">
+				<object id="38">
+					<pos x="3.5" y="-3"/>
+					<in1 component_id="44" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="2">
+				<object id="41">
+					<pos x="-1" y="-2.25"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="42">
+					<pos x="-1" y="-2.75"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="29" te="0" pe="0" pes="true">
+				<pos x="0.5" y="-1.75"/>
+				<in1 component_id="4" node_index="0" v="0"/>
+				<in2 component_id="14" node_index="0" v="0"/>
+				<in3 component_id="31" node_index="0" v="true"/>
+				<out1 v="0"/>
+				<kp text="3" value="3"/>
+				<ki text="0" value="0"/>
+				<kd text="0.1" value="0.1"/>
+			</c0>
+			<c1 id="30" te="0" pe="0" pes="true">
+				<pos x="0.5" y="-0.75"/>
+				<in1 component_id="4" node_index="0" v="0"/>
+				<in2 component_id="12" node_index="0" v="0"/>
+				<in3 component_id="31" node_index="0" v="true"/>
+				<out1 v="0"/>
+				<kp text="3" value="3"/>
+				<ki text="0" value="0"/>
+				<kd text="0.1" value="0.1"/>
+			</c1>
+			<c2 id="31">
+				<pos x="0.5" y="-2.25"/>
+				<out1 v="true"/>
+			</c2>
+			<c3 id="43" count="2" offset="0">
+				<pos x="0.5" y="-3.25"/>
+				<inc component_id="0" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="41" node_index="0" v="0"/>
+				<in2 component_id="42" node_index="0" v="0"/>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c3>
+			<c4 id="44" script="-- Tick function that will be executed every logic tick
+function onTick()
+	ammoCount = input.getNumber(1)
+
+end
+
+-- Draw function that will be executed when this script renders to a screen
+function onDraw()
+	w = screen.getWidth()				  -- Get the screen's width and height
+	h = screen.getHeight()					
+	screen.setColor(0, 255, 0)			 -- Set draw color to green
+	screen.drawTextBox(1, 1, w, h, ammoCount, 0, 0)
+end">
+				<pos x="2" y="-3"/>
+				<in1 component_id="43" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c4>
+			<c5 id="45" script="-- Tick function that will be executed every logic tick
+function onTick()
+	ammoCount = input.getNumber(2)
+
+end
+
+-- Draw function that will be executed when this script renders to a screen
+function onDraw()
+	w = screen.getWidth()				  -- Get the screen's width and height
+	h = screen.getHeight()					
+	screen.setColor(0, 255, 0)			 -- Set draw color to green
+	screen.drawTextBox(1, 1, w, h, ammoCount, 0, 0)
+end">
+				<pos x="2" y="-3.75"/>
+				<in1 component_id="43" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c5>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="2">
+				<pos x="-1" y="-0.25"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c0>
+			<c1 id="4">
+				<pos x="-1" y="-0.75"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c1>
+			<c2 id="7">
+				<pos x="2" y="-0.75"/>
+				<in1 component_id="30" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c2>
+			<c3 id="10">
+				<pos x="2" y="-0.25"/>
+				<in1 component_id="29" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c3>
+			<c4 id="12">
+				<pos x="-1" y="-1.25"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c4>
+			<c5 id="14">
+				<pos x="-1" y="-1.75"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c5>
+			<c6 id="35">
+				<pos x="3.5" y="-3.75"/>
+				<in1 component_id="45" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c6>
+			<c7 id="38">
+				<pos x="3.5" y="-3"/>
+				<in1 component_id="44" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c7>
+			<c8 id="41">
+				<pos x="-1" y="-2.25"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c8>
+			<c9 id="42">
+				<pos x="-1" y="-2.75"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c9>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

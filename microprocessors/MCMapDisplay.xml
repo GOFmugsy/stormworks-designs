@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="GPS Map Display" description="" hide_in_inventory="false" width="2" length="2" id_counter="12" id_counter_node="4" transform_index="0" sym0="0" sym1="0" sym2="6" sym3="1030" sym4="3586" sym5="1024" sym6="0" sym7="0" sym8="0" sym9="7680" sym10="8448" sym11="16512" sym12="16512" sym13="15616" sym14="512" sym15="0">
+	<nodes>
+		<n id="1" component_id="5" built_slot_index="0">
+			<node orientation="0" label="Display" mode="0" type="6" description="" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="6" built_slot_index="0">
+			<node orientation="0" label="x" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="3" component_id="8" built_slot_index="0">
+			<node orientation="0" label="y" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="10" built_slot_index="0">
+			<node orientation="0" label="Zoom" mode="1" type="1" description="" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="56">
+				<object id="11" script="-- Tick function that will be executed every logic tick
+function onTick()
+	x = input.getNumber(1)
+	y = input.getNumber(2)
+	zoom = input.getNumber(3)
+end
+
+-- Draw function that will be executed when this script renders to a screen
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	screen.drawMap(x, y, zoom)
+	screen.setColor(100, 100, 100)
+	screen.drawLine(w/2 + 1, h/2, w/2 - 2, h/2)
+	screen.drawLine(w/2, h/2 + 1, w/2, h/2 - 2)
+end">
+					<pos x="-2.5" y="0.75"/>
+					<in1 component_id="12" node_index="0">
+						<v bools="0" 01="-16228.583984" 02="-69.196922" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+			<c type="40">
+				<object id="12" count="3" offset="0">
+					<pos x="-4" y="0.25"/>
+					<inc component_id="0" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="6" node_index="0" v="-16228.584961"/>
+					<in2 component_id="8" node_index="0" v="-69.197014"/>
+					<in3 component_id="10" node_index="0" v="0"/>
+					<out1>
+						<v bools="0" 01="-16228.584961" 02="-69.197014" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="7">
+				<object id="5">
+					<pos x="-1" y="0.75"/>
+					<in1 component_id="11" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="2">
+				<object id="6">
+					<pos x="-5.5" y="0.75"/>
+					<in1 component_id="0" node_index="0" v="-16228.584961"/>
+					<out1 v="-16228.584961"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="8">
+					<pos x="-5.5" y="0.25"/>
+					<in1 component_id="0" node_index="0" v="-69.197014"/>
+					<out1 v="-69.197014"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="10">
+					<pos x="-5.5" y="-0.25"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="11" script="-- Tick function that will be executed every logic tick
+function onTick()
+	x = input.getNumber(1)
+	y = input.getNumber(2)
+	zoom = input.getNumber(3)
+end
+
+-- Draw function that will be executed when this script renders to a screen
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	screen.drawMap(x, y, zoom)
+	screen.setColor(100, 100, 100)
+	screen.drawLine(w/2 + 1, h/2, w/2 - 2, h/2)
+	screen.drawLine(w/2, h/2 + 1, w/2, h/2 - 2)
+end">
+				<pos x="-2.5" y="0.75"/>
+				<in1 component_id="12" node_index="0">
+					<v bools="0" 01="-16228.583984" 02="-69.196922" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c0>
+			<c1 id="12" count="3" offset="0">
+				<pos x="-4" y="0.25"/>
+				<inc component_id="0" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="6" node_index="0" v="-16228.584961"/>
+				<in2 component_id="8" node_index="0" v="-69.197014"/>
+				<in3 component_id="10" node_index="0" v="0"/>
+				<out1>
+					<v bools="0" 01="-16228.584961" 02="-69.197014" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c1>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="5">
+				<pos x="-1" y="0.75"/>
+				<in1 component_id="11" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c0>
+			<c1 id="6">
+				<pos x="-5.5" y="0.75"/>
+				<in1 component_id="0" node_index="0" v="-16228.584961"/>
+				<out1 v="-16228.584961"/>
+			</c1>
+			<c2 id="8">
+				<pos x="-5.5" y="0.25"/>
+				<in1 component_id="0" node_index="0" v="-69.197014"/>
+				<out1 v="-69.197014"/>
+			</c2>
+			<c3 id="10">
+				<pos x="-5.5" y="-0.25"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c3>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Simple Flare Panel Controller" description="" hide_in_inventory="false" width="3" length="2" id_counter="15" id_counter_node="5" transform_index="0" sym0="0" sym1="0" sym2="0" sym3="254" sym4="258" sym5="514" sym6="2046" sym7="1034" sym8="0" sym9="8" sym10="0" sym11="16" sym12="0" sym13="288" sym14="128" sym15="320">
+	<nodes>
+		<n id="1" component_id="2" built_slot_index="0">
+			<node orientation="0" label="Flare 1" mode="0" type="0" description="" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="4" built_slot_index="0">
+			<node orientation="0" label="Flare 2" mode="0" type="0" description="" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="6" built_slot_index="0">
+			<node orientation="0" label="Flare 3" mode="0" type="0" description="" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="10" built_slot_index="0">
+			<node orientation="0" label="Flare 4" mode="0" type="0" description="" flags="0">
+				<position x="2" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="5" component_id="9" built_slot_index="0">
+			<node orientation="0" label="Flare Panel" mode="1" type="5" description="" flags="0">
+				<position x="2" y="0" z="0"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="29">
+				<object id="12" i="0">
+					<pos x="-1.5" y="1"/>
+					<in1 component_id="9" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="13" i="1">
+					<pos x="-1.5" y="0.5"/>
+					<in1 component_id="9" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="14" i="2">
+					<pos x="-1.5" y="0"/>
+					<in1 component_id="9" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="29">
+				<object id="15" i="3">
+					<pos x="-1.5" y="-0.5"/>
+					<in1 component_id="9" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="false"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="1">
+				<object id="2">
+					<pos x="-0.25" y="1"/>
+					<in1 component_id="12" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="1">
+				<object id="4">
+					<pos x="-0.25" y="0.5"/>
+					<in1 component_id="13" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="1">
+				<object id="6">
+					<pos x="-0.25" y="0"/>
+					<in1 component_id="14" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="4">
+				<object id="9">
+					<pos x="-3.5" y="1"/>
+					<in1 component_id="0" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="1">
+				<object id="10">
+					<pos x="-0.25" y="-0.5"/>
+					<in1 component_id="15" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="12" i="0">
+				<pos x="-1.5" y="1"/>
+				<in1 component_id="9" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="false"/>
+			</c0>
+			<c1 id="13" i="1">
+				<pos x="-1.5" y="0.5"/>
+				<in1 component_id="9" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="false"/>
+			</c1>
+			<c2 id="14" i="2">
+				<pos x="-1.5" y="0"/>
+				<in1 component_id="9" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="false"/>
+			</c2>
+			<c3 id="15" i="3">
+				<pos x="-1.5" y="-0.5"/>
+				<in1 component_id="9" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="false"/>
+			</c3>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="2">
+				<pos x="-0.25" y="1"/>
+				<in1 component_id="12" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c0>
+			<c1 id="4">
+				<pos x="-0.25" y="0.5"/>
+				<in1 component_id="13" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c1>
+			<c2 id="6">
+				<pos x="-0.25" y="0"/>
+				<in1 component_id="14" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c2>
+			<c3 id="9">
+				<pos x="-3.5" y="1"/>
+				<in1 component_id="0" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c3>
+			<c4 id="10">
+				<pos x="-0.25" y="-0.5"/>
+				<in1 component_id="15" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c4>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

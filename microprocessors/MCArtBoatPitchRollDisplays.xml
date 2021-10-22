@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Boat Pitch and Roll Displays Controller" description="Drives a False Horizon display" hide_in_inventory="false" width="2" length="3" id_counter="23" id_counter_node="6" transform_index="0" sym0="0" sym1="0" sym2="0" sym3="65535" sym4="384" sym5="384" sym6="14782" sym7="65535" sym8="19874" sym9="3490" sym10="384" sym11="384" sym12="65535" sym13="0" sym14="0" sym15="0">
+	<nodes>
+		<n id="1" component_id="2" built_slot_index="0">
+			<node orientation="0" label="Roll" mode="1" type="1" description="" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="4" built_slot_index="0">
+			<node orientation="0" label="Pitch" mode="1" type="1" description="" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="3" component_id="7" built_slot_index="0">
+			<node orientation="0" label="Pitch Display" mode="1" type="5" description="The input signal to be processed." flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="10" built_slot_index="0">
+			<node orientation="0" label="Pitch Display" mode="0" type="6" description="The input signal to be processed." flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="5" component_id="14" built_slot_index="0">
+			<node orientation="0" label="Roll Display" mode="0" type="6" description="The input signal to be processed." flags="0">
+				<position x="1" y="0" z="2"/>
+			</node>
+		</n>
+		<n id="6" component_id="16" built_slot_index="0">
+			<node orientation="0" label="Roll Display" mode="1" type="5" description="The input signal to be processed." flags="0">
+				<position x="0" y="0" z="2"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="40">
+				<object id="5" count="2" offset="4">
+					<pos x="1.5" y="0.5"/>
+					<inc component_id="7" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="4" node_index="0" v="-0.016844"/>
+					<in2 component_id="2" node_index="0" v="0.001254"/>
+					<out1>
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.016844" 06="0.001254" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="56">
+				<object id="11" script="function onTick()
+	isPressed = input.getBool(1)
+	inputx = input.getNumber(3)
+	inputy = input.getNumber(4)
+	frontTilt = input.getNumber(5) * 4 * 90
+	sideTilt = input.getNumber(6) * 4 * 90
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	rad = w + h
+	cx = w/2
+	cy = h/2
+	pitch = math.acos(frontTilt / 180)
+	roll = math.rad(90 - sideTilt)
+	troll = math.rad(0 - sideTilt)
+	broll = math.rad(180 - sideTilt)
+	x1 = cx + rad * math.cos(roll + pitch)
+	y1 = cy + rad * math.sin(roll + pitch)
+	x2 = cx + rad * math.cos(roll - pitch)
+	y2 = cy + rad * math.sin(roll - pitch)
+	x3 = cx + rad * math.cos(troll - pitch)
+	y3 = cy + rad * math.sin(troll - pitch)
+	x4 = cx + rad * math.cos(broll - pitch)
+	y4 = cy + rad * math.sin(broll - pitch)
+	screen.drawLine(x1, y1, x2, y2)
+	
+	screen.setColor(94, 60, 34) --brown
+	screen.drawTriangleF(x1, y1, x2, y2, x4, y4)
+	screen.setColor(40, 114, 151) --blue
+	screen.drawTriangleF(x1, y1, x2, y2, x3, y3)
+	
+	screen.setColor(200, 200, 200)
+	screen.drawTriangleF(cx + 10, cy, cx, cy + 10, cx - 10, cy)
+	screen.drawRectF(cx - 10, cy - 5, 20, 5)
+end">
+					<pos x="3" y="0.75"/>
+					<in1 component_id="5" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.016926" 06="0.001222" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+			<c type="40">
+				<object id="17" count="2" offset="4">
+					<pos x="1.5" y="-0.5"/>
+					<inc component_id="16" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="2" node_index="0" v="0.001254"/>
+					<in2 component_id="23" node_index="0" v="0.016926"/>
+					<out1>
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0.001254" 06="0.016926" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="56">
+				<object id="19" script="function onTick()
+	isPressed = input.getBool(1)
+	inputx = input.getNumber(3)
+	inputy = input.getNumber(4)
+	frontTilt = input.getNumber(5) * 4 * 90 * -1
+	sideTilt = input.getNumber(6) * 4 * 90
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	rad = w + h
+	cx = w/2
+	cy = h/2
+	pitch = math.acos(frontTilt / 180)
+	roll = math.rad(90 - sideTilt)
+	troll = math.rad(0 - sideTilt)
+	broll = math.rad(180 - sideTilt)
+	x1 = cx + rad * math.cos(roll + pitch)
+	y1 = cy + rad * math.sin(roll + pitch)
+	x2 = cx + rad * math.cos(roll - pitch)
+	y2 = cy + rad * math.sin(roll - pitch)
+	x3 = cx + rad * math.cos(troll - pitch)
+	y3 = cy + rad * math.sin(troll - pitch)
+	x4 = cx + rad * math.cos(broll - pitch)
+	y4 = cy + rad * math.sin(broll - pitch)
+	screen.drawLine(x1, y1, x2, y2)
+	
+	screen.setColor(94, 60, 34) --brown
+	screen.drawTriangleF(x1, y1, x2, y2, x4, y4)
+	screen.setColor(40, 114, 151) --blue
+	screen.drawTriangleF(x1, y1, x2, y2, x3, y3)
+	
+	screen.setColor(200, 200, 200)
+	screen.drawTriangleF(cx + 10, cy, cx + 5, cy + 5, cx + 5, cy)
+	screen.drawRectF(cx - 10, cy - 5, 20, 5)
+	screen.drawRectF(cx - 10, cy, 15, 5)
+end">
+					<pos x="3" y="0"/>
+					<in1 component_id="17" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0.001222" 06="0.017004" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+			<c type="15">
+				<object id="22">
+					<pos x="0" y="-1"/>
+					<out1 v="-1"/>
+					<n text="-1" value="-1"/>
+				</object>
+			</c>
+			<c type="8">
+				<object id="23">
+					<pos x="1.5" y="-1.25"/>
+					<in1 component_id="4" node_index="0" v="-0.016844"/>
+					<in2 component_id="22" node_index="0" v="-1"/>
+					<out1 v="0.016844"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="2">
+				<object id="2">
+					<pos x="0" y="0"/>
+					<in1 component_id="0" node_index="0" v="0.001254"/>
+					<out1 v="0.001254"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="4">
+					<pos x="0" y="0.5"/>
+					<in1 component_id="0" node_index="0" v="-0.016844"/>
+					<out1 v="-0.016844"/>
+				</object>
+			</c>
+			<c type="4">
+				<object id="7">
+					<pos x="0" y="1"/>
+					<in1 component_id="0" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1>
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="7">
+				<object id="10">
+					<pos x="4.5" y="0"/>
+					<in1 component_id="19" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="7">
+				<object id="14">
+					<pos x="4.5" y="0.75"/>
+					<in1 component_id="11" node_index="1">
+						<v/>
+					</in1>
+					<out1>
+						<v/>
+					</out1>
+				</object>
+			</c>
+			<c type="4">
+				<object id="16">
+					<pos x="0" y="-0.5"/>
+					<in1 component_id="0" node_index="0">
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1>
+						<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="5" count="2" offset="4">
+				<pos x="1.5" y="0.5"/>
+				<inc component_id="7" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="4" node_index="0" v="-0.016844"/>
+				<in2 component_id="2" node_index="0" v="0.001254"/>
+				<out1>
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.016844" 06="0.001254" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c0>
+			<c1 id="11" script="function onTick()
+	isPressed = input.getBool(1)
+	inputx = input.getNumber(3)
+	inputy = input.getNumber(4)
+	frontTilt = input.getNumber(5) * 4 * 90
+	sideTilt = input.getNumber(6) * 4 * 90
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	rad = w + h
+	cx = w/2
+	cy = h/2
+	pitch = math.acos(frontTilt / 180)
+	roll = math.rad(90 - sideTilt)
+	troll = math.rad(0 - sideTilt)
+	broll = math.rad(180 - sideTilt)
+	x1 = cx + rad * math.cos(roll + pitch)
+	y1 = cy + rad * math.sin(roll + pitch)
+	x2 = cx + rad * math.cos(roll - pitch)
+	y2 = cy + rad * math.sin(roll - pitch)
+	x3 = cx + rad * math.cos(troll - pitch)
+	y3 = cy + rad * math.sin(troll - pitch)
+	x4 = cx + rad * math.cos(broll - pitch)
+	y4 = cy + rad * math.sin(broll - pitch)
+	screen.drawLine(x1, y1, x2, y2)
+	
+	screen.setColor(94, 60, 34) --brown
+	screen.drawTriangleF(x1, y1, x2, y2, x4, y4)
+	screen.setColor(40, 114, 151) --blue
+	screen.drawTriangleF(x1, y1, x2, y2, x3, y3)
+	
+	screen.setColor(200, 200, 200)
+	screen.drawTriangleF(cx + 10, cy, cx, cy + 10, cx - 10, cy)
+	screen.drawRectF(cx - 10, cy - 5, 20, 5)
+end">
+				<pos x="3" y="0.75"/>
+				<in1 component_id="5" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="-0.016926" 06="0.001222" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c1>
+			<c2 id="17" count="2" offset="4">
+				<pos x="1.5" y="-0.5"/>
+				<inc component_id="16" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="2" node_index="0" v="0.001254"/>
+				<in2 component_id="23" node_index="0" v="0.016926"/>
+				<out1>
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0.001254" 06="0.016926" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c2>
+			<c3 id="19" script="function onTick()
+	isPressed = input.getBool(1)
+	inputx = input.getNumber(3)
+	inputy = input.getNumber(4)
+	frontTilt = input.getNumber(5) * 4 * 90 * -1
+	sideTilt = input.getNumber(6) * 4 * 90
+end
+
+function onDraw()
+	w = screen.getWidth()
+	h = screen.getHeight()
+	rad = w + h
+	cx = w/2
+	cy = h/2
+	pitch = math.acos(frontTilt / 180)
+	roll = math.rad(90 - sideTilt)
+	troll = math.rad(0 - sideTilt)
+	broll = math.rad(180 - sideTilt)
+	x1 = cx + rad * math.cos(roll + pitch)
+	y1 = cy + rad * math.sin(roll + pitch)
+	x2 = cx + rad * math.cos(roll - pitch)
+	y2 = cy + rad * math.sin(roll - pitch)
+	x3 = cx + rad * math.cos(troll - pitch)
+	y3 = cy + rad * math.sin(troll - pitch)
+	x4 = cx + rad * math.cos(broll - pitch)
+	y4 = cy + rad * math.sin(broll - pitch)
+	screen.drawLine(x1, y1, x2, y2)
+	
+	screen.setColor(94, 60, 34) --brown
+	screen.drawTriangleF(x1, y1, x2, y2, x4, y4)
+	screen.setColor(40, 114, 151) --blue
+	screen.drawTriangleF(x1, y1, x2, y2, x3, y3)
+	
+	screen.setColor(200, 200, 200)
+	screen.drawTriangleF(cx + 10, cy, cx + 5, cy + 5, cx + 5, cy)
+	screen.drawRectF(cx - 10, cy - 5, 20, 5)
+	screen.drawRectF(cx - 10, cy, 15, 5)
+end">
+				<pos x="3" y="0"/>
+				<in1 component_id="17" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0.001222" 06="0.017004" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c3>
+			<c4 id="22">
+				<pos x="0" y="-1"/>
+				<out1 v="-1"/>
+				<n text="-1" value="-1"/>
+			</c4>
+			<c5 id="23">
+				<pos x="1.5" y="-1.25"/>
+				<in1 component_id="4" node_index="0" v="-0.016844"/>
+				<in2 component_id="22" node_index="0" v="-1"/>
+				<out1 v="0.016844"/>
+			</c5>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="2">
+				<pos x="0" y="0"/>
+				<in1 component_id="0" node_index="0" v="0.001254"/>
+				<out1 v="0.001254"/>
+			</c0>
+			<c1 id="4">
+				<pos x="0" y="0.5"/>
+				<in1 component_id="0" node_index="0" v="-0.016844"/>
+				<out1 v="-0.016844"/>
+			</c1>
+			<c2 id="7">
+				<pos x="0" y="1"/>
+				<in1 component_id="0" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1>
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c2>
+			<c3 id="10">
+				<pos x="4.5" y="0"/>
+				<in1 component_id="19" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c3>
+			<c4 id="14">
+				<pos x="4.5" y="0.75"/>
+				<in1 component_id="11" node_index="1">
+					<v/>
+				</in1>
+				<out1>
+					<v/>
+				</out1>
+			</c4>
+			<c5 id="16">
+				<pos x="0" y="-0.5"/>
+				<in1 component_id="0" node_index="0">
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1>
+					<v bools="0" 01="32" 02="32" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c5>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

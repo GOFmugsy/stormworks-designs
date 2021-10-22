@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="MPG" description="Miles Per Gallon" hide_in_inventory="false" width="2" length="2" id_counter="16" id_counter_node="3" transform_index="0" sym0="0" sym1="0" sym2="0" sym3="0" sym4="0" sym5="0" sym6="0" sym7="12450" sym8="18594" sym9="27050" sym10="2742" sym11="12706" sym12="0" sym13="0" sym14="0" sym15="0">
+	<nodes>
+		<n id="1" component_id="2" built_slot_index="0">
+			<node orientation="0" label="m/s" mode="1" type="1" description="Meters per Second" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="4" built_slot_index="0">
+			<node orientation="0" label="L" mode="1" type="1" description="Current Fuel Level" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="7" built_slot_index="0">
+			<node orientation="0" label="MPG" mode="0" type="1" description="Miles per Gallon" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="13">
+				<object id="8" memory="0">
+					<pos x="-1.75" y="1.5"/>
+					<in1 component_id="9" node_index="0" v="false"/>
+					<in2 component_id="0" node_index="0" v="false"/>
+					<in3 component_id="4" node_index="0" v="0"/>
+					<out1 v="0"/>
+					<r text="0" value="0"/>
+				</object>
+			</c>
+			<c type="49">
+				<object id="9" u="0" t="0">
+					<pos x="-3" y="1.75"/>
+					<in1 component_id="12" node_index="0" v="false"/>
+					<in2 component_id="10" node_index="0" v="0"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="15">
+				<object id="10">
+					<pos x="-4.5" y="1.5"/>
+					<out1 v="0"/>
+					<n text="1" value="1"/>
+				</object>
+			</c>
+			<c type="16">
+				<object id="12">
+					<pos x="-4.5" y="2"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="7">
+				<object id="13">
+					<pos x="-1.75" y="0.75"/>
+					<in1 component_id="8" node_index="0" v="0"/>
+					<in2 component_id="4" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="45">
+				<object id="14" e="x*.264">
+					<pos x="-0.5" y="1"/>
+					<in1 component_id="13" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="9">
+				<object id="15">
+					<pos x="-0.5" y="0.25"/>
+					<in1 component_id="2" node_index="0" v="0"/>
+					<in2 component_id="14" node_index="0" v="0"/>
+					<out1 v="0"/>
+					<out2 v="false"/>
+				</object>
+			</c>
+			<c type="45">
+				<object id="16" e="x*.000621">
+					<pos x="-0.5" y="-0.25"/>
+					<in1 component_id="15" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="2">
+				<object id="2">
+					<pos x="-3" y="0.75"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="4">
+					<pos x="-3" y="1.25"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="7">
+					<pos x="0.75" y="-0.25"/>
+					<in1 component_id="16" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="8" memory="0">
+				<pos x="-1.75" y="1.5"/>
+				<in1 component_id="9" node_index="0" v="false"/>
+				<in2 component_id="0" node_index="0" v="false"/>
+				<in3 component_id="4" node_index="0" v="0"/>
+				<out1 v="0"/>
+				<r text="0" value="0"/>
+			</c0>
+			<c1 id="9" u="0" t="0">
+				<pos x="-3" y="1.75"/>
+				<in1 component_id="12" node_index="0" v="false"/>
+				<in2 component_id="10" node_index="0" v="0"/>
+				<out1 v="false"/>
+			</c1>
+			<c2 id="10">
+				<pos x="-4.5" y="1.5"/>
+				<out1 v="0"/>
+				<n text="1" value="1"/>
+			</c2>
+			<c3 id="12">
+				<pos x="-4.5" y="2"/>
+				<out1 v="false"/>
+			</c3>
+			<c4 id="13">
+				<pos x="-1.75" y="0.75"/>
+				<in1 component_id="8" node_index="0" v="0"/>
+				<in2 component_id="4" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c4>
+			<c5 id="14" e="x*.264">
+				<pos x="-0.5" y="1"/>
+				<in1 component_id="13" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c5>
+			<c6 id="15">
+				<pos x="-0.5" y="0.25"/>
+				<in1 component_id="2" node_index="0" v="0"/>
+				<in2 component_id="14" node_index="0" v="0"/>
+				<out1 v="0"/>
+				<out2 v="false"/>
+			</c6>
+			<c7 id="16" e="x*.000621">
+				<pos x="-0.5" y="-0.25"/>
+				<in1 component_id="15" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c7>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="2">
+				<pos x="-3" y="0.75"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c0>
+			<c1 id="4">
+				<pos x="-3" y="1.25"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c1>
+			<c2 id="7">
+				<pos x="0.75" y="-0.25"/>
+				<in1 component_id="16" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c2>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

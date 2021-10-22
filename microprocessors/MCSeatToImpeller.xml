@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="A/D to Impeller" description="Converts -1 to 1 of A/D seat to 0-1 L and 0-1 R" hide_in_inventory="false" width="2" length="2" id_counter="18" id_counter_node="3" transform_index="0" sym0="17990" sym1="18761" sym2="18761" sym3="18761" sym4="17990" sym5="0" sym6="0" sym7="0" sym8="0" sym9="1056" sym10="1068" sym11="1056" sym12="16386" sym13="32766" sym14="16386" sym15="0">
+	<nodes>
+		<n id="1" component_id="2" built_slot_index="0">
+			<node orientation="0" label="A/D" mode="1" type="1" description="-1 to 1 for Left to Right" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="2" component_id="5" built_slot_index="0">
+			<node orientation="0" label="Left" mode="0" type="1" description="0 to 1 for Left" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="3" component_id="8" built_slot_index="0">
+			<node orientation="0" label="Right" mode="0" type="1" description="0 to 1 for Right" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="0" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="40">
+				<object id="13" count="1" offset="0">
+					<pos x="-4" y="0.75"/>
+					<inc component_id="0" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</inc>
+					<in1 component_id="2" node_index="0" v="0"/>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+				</object>
+			</c>
+			<c type="31">
+				<object id="14" i="1">
+					<pos x="-1.5" y="1"/>
+					<in1 component_id="18" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="31">
+				<object id="17" i="2">
+					<pos x="-1.5" y="0.5"/>
+					<in1 component_id="18" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="56">
+				<object id="18" script="-- Tick function that will be executed every logic tick
+function onTick()
+	lr = input.getNumber(1)			 -- Read the first number from the script's composite input
+	if lr &lt; 0 then
+		output.setNumber(2, math.abs(lr))
+		output.setNumber(3, 0)
+	else
+		output.setNumber(2, 0)
+		output.setNumber(3, math.abs(lr))
+	end
+end
+
+">
+					<pos x="-2.75" y="0.75"/>
+					<in1 component_id="13" node_index="0">
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</in1>
+					<in2 component_id="0" node_index="0">
+						<v/>
+					</in2>
+					<out1>
+						<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+					</out1>
+					<out2>
+						<v/>
+					</out2>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="2">
+				<object id="2">
+					<pos x="-5.25" y="0.75"/>
+					<in1 component_id="0" node_index="0" v="0.050206"/>
+					<out1 v="0.050206"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="5">
+					<pos x="-0.25" y="1"/>
+					<in1 component_id="14" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="8">
+					<pos x="-0.25" y="0.5"/>
+					<in1 component_id="17" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="13" count="1" offset="0">
+				<pos x="-4" y="0.75"/>
+				<inc component_id="0" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</inc>
+				<in1 component_id="2" node_index="0" v="0"/>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+			</c0>
+			<c1 id="14" i="1">
+				<pos x="-1.5" y="1"/>
+				<in1 component_id="18" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="0"/>
+			</c1>
+			<c2 id="17" i="2">
+				<pos x="-1.5" y="0.5"/>
+				<in1 component_id="18" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<out1 v="0"/>
+			</c2>
+			<c3 id="18" script="-- Tick function that will be executed every logic tick
+function onTick()
+	lr = input.getNumber(1)			 -- Read the first number from the script's composite input
+	if lr &lt; 0 then
+		output.setNumber(2, math.abs(lr))
+		output.setNumber(3, 0)
+	else
+		output.setNumber(2, 0)
+		output.setNumber(3, math.abs(lr))
+	end
+end
+
+">
+				<pos x="-2.75" y="0.75"/>
+				<in1 component_id="13" node_index="0">
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</in1>
+				<in2 component_id="0" node_index="0">
+					<v/>
+				</in2>
+				<out1>
+					<v bools="0" 01="0" 02="0" 03="0" 04="0" 05="0" 06="0" 07="0" 08="0" 09="0" 10="0" 11="0" 12="0" 13="0" 14="0" 15="0" 16="0" 17="0" 18="0" 19="0" 20="0" 21="0" 22="0" 23="0" 24="0" 25="0" 26="0" 27="0" 28="0" 29="0" 30="0" 31="0" 32="0"/>
+				</out1>
+				<out2>
+					<v/>
+				</out2>
+			</c3>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="2">
+				<pos x="-5.25" y="0.75"/>
+				<in1 component_id="0" node_index="0" v="0.050206"/>
+				<out1 v="0.050206"/>
+			</c0>
+			<c1 id="5">
+				<pos x="-0.25" y="1"/>
+				<in1 component_id="14" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c1>
+			<c2 id="8">
+				<pos x="-0.25" y="0.5"/>
+				<in1 component_id="17" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c2>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+

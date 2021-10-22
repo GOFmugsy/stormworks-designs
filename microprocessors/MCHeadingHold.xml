@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<microprocessor name="Heading Lock" description="Chip for heading lock" hide_in_inventory="false" width="2" length="3" id_counter="29" id_counter_node="6" transform_index="0" sym0="960" sym1="7224" sym2="8196" sym3="16386" sym4="16386" sym5="16770" sym6="33729" sym7="34785" sym8="34785" sym9="33729" sym10="16770" sym11="16770" sym12="16770" sym13="8580" sym14="7224" sym15="960">
+	<nodes>
+		<n id="1" component_id="1" built_slot_index="0">
+			<node orientation="0" label="Lock" mode="1" type="0" description="Locked or not" flags="0">
+				<position x="0" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="2" component_id="3" built_slot_index="0">
+			<node orientation="0" label="Compass Sensor" mode="1" type="1" description="Compass Sensor" flags="0">
+				<position x="0" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="3" component_id="8" built_slot_index="0">
+			<node orientation="0" label="Steering Correction" mode="0" type="1" description="Steering Correction" flags="0">
+				<position x="1" y="0" z="1"/>
+			</node>
+		</n>
+		<n id="4" component_id="13" built_slot_index="0">
+			<node orientation="0" label="Steering Wheel" mode="1" type="1" description="Steering Wheel" flags="0">
+				<position x="1" y="0" z="0"/>
+			</node>
+		</n>
+		<n id="5" component_id="22" built_slot_index="0">
+			<node orientation="0" label="Corrected Compass" mode="0" type="1" description="Corrected Compass" flags="0">
+				<position x="1" y="0" z="2"/>
+			</node>
+		</n>
+	</nodes>
+	<group id="0">
+		<pos x="0" y="0"/>
+		<data type="-427082131" name="" desc="">
+			<inputs/>
+			<outputs/>
+		</data>
+		<components>
+			<c type="13">
+				<object id="10" memory="0">
+					<pos x="0" y="0.75"/>
+					<in1 component_id="18" node_index="0" v="false"/>
+					<in2 component_id="0" node_index="0" v="false"/>
+					<in3 component_id="19" node_index="0" v="89.705215"/>
+					<out1 v="0"/>
+					<r text="0" value="0"/>
+				</object>
+			</c>
+			<c type="45">
+				<object id="17" e="x*1">
+					<pos x="3" y="-0.25"/>
+					<in1 component_id="23" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="48">
+				<object id="18" m="1" p="false">
+					<pos x="0" y="1.75"/>
+					<in1 component_id="1" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="45">
+				<object id="19" e="((1-x)%1)*360">
+					<pos x="-3" y="0.25"/>
+					<in1 component_id="3" node_index="0" v="-0.249174"/>
+					<out1 v="89.702682"/>
+				</object>
+			</c>
+			<c type="6">
+				<object id="23">
+					<pos x="1.75" y="-0.5"/>
+					<in1 component_id="29" node_index="0" v="0"/>
+					<in2 component_id="13" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="23">
+				<object id="29" te="0" pe="0" pes="false">
+					<pos x="0" y="-0.25"/>
+					<in1 component_id="10" node_index="0" v="0"/>
+					<in2 component_id="19" node_index="0" v="89.705215"/>
+					<in3 component_id="1" node_index="0" v="false"/>
+					<out1 v="0"/>
+					<kp text="0.001" value="0.001"/>
+					<ki text="0.00001" value="0.00001"/>
+					<kd text="0" value="0"/>
+				</object>
+			</c>
+		</components>
+		<components_bridge>
+			<c type="0">
+				<object id="1">
+					<pos x="-3" y="0.75"/>
+					<in1 component_id="0" node_index="0" v="false"/>
+					<out1 v="false"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="3">
+					<pos x="-4.5" y="0.25"/>
+					<in1 component_id="0" node_index="0" v="-0.249174"/>
+					<out1 v="-0.249174"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="8">
+					<pos x="4.25" y="-0.25"/>
+					<in1 component_id="17" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="2">
+				<object id="13">
+					<pos x="0" y="-0.75"/>
+					<in1 component_id="0" node_index="0" v="0"/>
+					<out1 v="0"/>
+				</object>
+			</c>
+			<c type="3">
+				<object id="22">
+					<pos x="-3" y="-0.25"/>
+					<in1 component_id="19" node_index="0" v="89.702682"/>
+					<out1 v="89.702682"/>
+				</object>
+			</c>
+		</components_bridge>
+		<groups/>
+		<component_states>
+			<c0 id="10" memory="0">
+				<pos x="0" y="0.75"/>
+				<in1 component_id="18" node_index="0" v="false"/>
+				<in2 component_id="0" node_index="0" v="false"/>
+				<in3 component_id="19" node_index="0" v="89.705215"/>
+				<out1 v="0"/>
+				<r text="0" value="0"/>
+			</c0>
+			<c1 id="17" e="x*1">
+				<pos x="3" y="-0.25"/>
+				<in1 component_id="23" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c1>
+			<c2 id="18" m="1" p="false">
+				<pos x="0" y="1.75"/>
+				<in1 component_id="1" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c2>
+			<c3 id="19" e="((1-x)%1)*360">
+				<pos x="-3" y="0.25"/>
+				<in1 component_id="3" node_index="0" v="-0.249174"/>
+				<out1 v="89.702682"/>
+			</c3>
+			<c4 id="23">
+				<pos x="1.75" y="-0.5"/>
+				<in1 component_id="29" node_index="0" v="0"/>
+				<in2 component_id="13" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c4>
+			<c5 id="29" te="0" pe="0" pes="false">
+				<pos x="0" y="-0.25"/>
+				<in1 component_id="10" node_index="0" v="0"/>
+				<in2 component_id="19" node_index="0" v="89.705215"/>
+				<in3 component_id="1" node_index="0" v="false"/>
+				<out1 v="0"/>
+				<kp text="0.001" value="0.001"/>
+				<ki text="0.00001" value="0.00001"/>
+				<kd text="0" value="0"/>
+			</c5>
+		</component_states>
+		<component_bridge_states>
+			<c0 id="1">
+				<pos x="-3" y="0.75"/>
+				<in1 component_id="0" node_index="0" v="false"/>
+				<out1 v="false"/>
+			</c0>
+			<c1 id="3">
+				<pos x="-4.5" y="0.25"/>
+				<in1 component_id="0" node_index="0" v="-0.249174"/>
+				<out1 v="-0.249174"/>
+			</c1>
+			<c2 id="8">
+				<pos x="4.25" y="-0.25"/>
+				<in1 component_id="17" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c2>
+			<c3 id="13">
+				<pos x="0" y="-0.75"/>
+				<in1 component_id="0" node_index="0" v="0"/>
+				<out1 v="0"/>
+			</c3>
+			<c4 id="22">
+				<pos x="-3" y="-0.25"/>
+				<in1 component_id="19" node_index="0" v="89.702682"/>
+				<out1 v="89.702682"/>
+			</c4>
+		</component_bridge_states>
+		<group_states/>
+	</group>
+</microprocessor>
+
